@@ -7,4 +7,11 @@ include:
       - '/gitlab-ci/deploy.gitlab-ci.yml'
 
 variables:
-  
+  # Maven needs more memory in this repository, because the
+  # maven-war-plugin:war goal runs out-of-memory with 256m:
+  MAVEN_OPTS: >-
+    -Xmx384m
+    -Dhttps.protocols=TLSv1.2
+    -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository
+    -Dorg.slf4j.simpleLogger.showDateTime=true
+    -Djava.awt.headless=true
